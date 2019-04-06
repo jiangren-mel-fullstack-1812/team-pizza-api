@@ -15,6 +15,7 @@ import {
   put,
   del,
   requestBody,
+  HttpErrors,
 } from '@loopback/rest';
 import {Product} from '../models';
 import {ProductRepository} from '../repositories';
@@ -22,7 +23,7 @@ import {ProductRepository} from '../repositories';
 export class ProductController {
   constructor(
     @repository(ProductRepository)
-    public productRepository : ProductRepository,
+    public productRepository: ProductRepository,
   ) {}
 
   @post('/products', {
@@ -34,6 +35,11 @@ export class ProductController {
     },
   })
   async create(@requestBody() product: Product): Promise<Product> {
+    const validTypes = ['TOPPING', 'SIZE'];
+
+    if (!validTypes.includes(product.type)) {
+      throw new HttpErrors.BadRequest('INVALID_TYPE');
+    }
     return await this.productRepository.create(product);
   }
 
