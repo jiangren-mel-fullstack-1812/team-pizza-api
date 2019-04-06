@@ -1,0 +1,10 @@
+{
+  "name": "MongoDS",
+  "connector": "mongodb",
+  "url": "",
+  "host": "ds143594.mlab.com",
+  "port": 43594,
+  "user": "admin",
+  "password": "123abc",
+  "database": "db-pizza-api"
+}
