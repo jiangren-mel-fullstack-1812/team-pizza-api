@@ -28,8 +28,9 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
-    "start": "nodemon .",
-    "prepublishOnly": "npm run test"
+    "start": "node .",
+    "prepublishOnly": "npm run test",
+    "dev": "nodemon ."
   },
   "repository": {
     "type": "git"
