@@ -19,6 +19,7 @@ import {
 } from '@loopback/rest';
 import {Product} from '../models';
 import {ProductRepository} from '../repositories';
+import IfValidUrl from '../helpers/IfValidUrl';
 
 export class ProductController {
   constructor(
@@ -35,14 +36,15 @@ export class ProductController {
     },
   })
   async create(@requestBody() product: Product): Promise<Product> {
-    // Validation for 'type' property
     const validTypes = ['TOPPING', 'SIZE'];
     if (!validTypes.includes(product.type)) {
       throw new HttpErrors.BadRequest('INVALID_TYPE');
     }
-    // Validation for 'price' property
     if (product.price < 0.0) {
       throw new HttpErrors.BadRequest('INVALID_PRICE: price must be positive');
+    }
+    if (!IfValidUrl(product.imgUrl)) {
+      throw new HttpErrors.BadRequest('INVALID_URL');
     }
 
     return await this.productRepository.create(product);
